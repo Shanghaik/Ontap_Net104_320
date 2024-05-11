@@ -25,6 +25,7 @@ namespace Ontap_Net104_320.Controllers
                     return Content("Đăng nhập thất bại");
                 }else
                 {
+                    HttpContext.Session.SetString("account", username); // Gán dữ liệu đăng nhập vào session
                     return RedirectToAction("Index", "Home"); // Nếu thành công thì điều hướng về Index của Home
                 }
             }

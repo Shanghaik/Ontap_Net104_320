@@ -17,5 +17,7 @@ namespace Ontap_Net104_320.Models
             ErrorMessage = "Số điện thoại phải đúng định dạng xxx-xxx-xxxx")]
         public string Phone { get; set; }
         public string Address { get; set; }
+        public virtual List<Bill> Bills { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-namespace Ontap_Net104_320
+﻿namespace Ontap_Net104_320
 {
     public class Program
     {
@@ -8,7 +8,10 @@ namespace Ontap_Net104_320
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromSeconds(10); // Set thời gian timeout là 10 giây
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,7 +24,7 @@ namespace Ontap_Net104_320
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession(); // Khai báo để dùng session
             app.UseRouting();
 
             app.UseAuthorization();

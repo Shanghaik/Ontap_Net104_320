@@ -15,6 +15,12 @@ namespace Ontap_Net104_320.Controllers
 
         public IActionResult Index()
         {
+            var sessiondata = HttpContext.Session.GetString("account"); // Lấy dữ liệu từ session
+            if (sessiondata == null) // Nếu chưa đăng nhập hoặc data ko có
+            {
+                ViewData["login"] = "Bạn chưa đăng nhập!";
+            }
+            else ViewData["login"] = "Xin chào " + sessiondata;
             return View();
         }
 
