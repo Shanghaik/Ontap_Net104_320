@@ -76,7 +76,7 @@ namespace Ontap_Net104_320.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("Bill");
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("Ontap_Net104_320.Models.BillDetails", b =>
@@ -117,7 +117,7 @@ namespace Ontap_Net104_320.Migrations
 
                     b.HasKey("Username");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Ontap_Net104_320.Models.CartDetails", b =>
@@ -145,7 +145,7 @@ namespace Ontap_Net104_320.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("CartDetails");
+                    b.ToTable("CartDetailss");
                 });
 
             modelBuilder.Entity("Ontap_Net104_320.Models.Product", b =>
@@ -170,7 +170,7 @@ namespace Ontap_Net104_320.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Ontap_Net104_320.Models.Bill", b =>

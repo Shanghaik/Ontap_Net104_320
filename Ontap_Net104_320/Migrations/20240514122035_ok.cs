@@ -10,46 +10,22 @@ namespace Ontap_Net104_320.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Bill",
+                name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(256)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Password = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nchar(256)", fixedLength: true, maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bill", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bill_Accounts_Username",
-                        column: x => x.Username,
-                        principalTable: "Accounts",
-                        principalColumn: "Username",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Accounts", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cart",
-                columns: table => new
-                {
-                    Username = table.Column<string>(type: "nvarchar(256)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cart", x => x.Username);
-                    table.ForeignKey(
-                        name: "FK_Cart_Accounts_Username",
-                        column: x => x.Username,
-                        principalTable: "Accounts",
-                        principalColumn: "Username",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -60,7 +36,46 @@ namespace Ontap_Net104_320.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bills",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bills", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bills_Accounts_Username",
+                        column: x => x.Username,
+                        principalTable: "Accounts",
+                        principalColumn: "Username",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Username = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Username);
+                    table.ForeignKey(
+                        name: "FK_Carts_Accounts_Username",
+                        column: x => x.Username,
+                        principalTable: "Accounts",
+                        principalColumn: "Username",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,21 +92,21 @@ namespace Ontap_Net104_320.Migrations
                 {
                     table.PrimaryKey("PK_BillDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BillDetails_Bill_BillId",
+                        name: "FK_BillDetails_Bills_BillId",
                         column: x => x.BillId,
-                        principalTable: "Bill",
+                        principalTable: "Bills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BillDetails_Product_ProductId",
+                        name: "FK_BillDetails_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartDetails",
+                name: "CartDetailss",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -102,25 +117,20 @@ namespace Ontap_Net104_320.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartDetails", x => x.Id);
+                    table.PrimaryKey("PK_CartDetailss", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Cart_CartDetails",
                         column: x => x.Username,
-                        principalTable: "Cart",
+                        principalTable: "Carts",
                         principalColumn: "Username",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartDetails_Product_ProductId",
+                        name: "FK_CartDetailss_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bill_Username",
-                table: "Bill",
-                column: "Username");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BillDetails_BillId",
@@ -133,13 +143,18 @@ namespace Ontap_Net104_320.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartDetails_ProductId",
-                table: "CartDetails",
+                name: "IX_Bills_Username",
+                table: "Bills",
+                column: "Username");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartDetailss_ProductId",
+                table: "CartDetailss",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartDetails_Username",
-                table: "CartDetails",
+                name: "IX_CartDetailss_Username",
+                table: "CartDetailss",
                 column: "Username");
         }
 
@@ -149,16 +164,19 @@ namespace Ontap_Net104_320.Migrations
                 name: "BillDetails");
 
             migrationBuilder.DropTable(
-                name: "CartDetails");
+                name: "CartDetailss");
 
             migrationBuilder.DropTable(
-                name: "Bill");
+                name: "Bills");
 
             migrationBuilder.DropTable(
-                name: "Cart");
+                name: "Carts");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Accounts");
         }
     }
 }

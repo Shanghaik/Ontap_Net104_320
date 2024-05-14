@@ -39,6 +39,12 @@ namespace Ontap_Net104_320.Controllers
             try
             {
                 context.Accounts.Add(account);
+                Cart cart = new Cart() // Tạo 1 Cart mới cho mỗi user được tạo
+                {
+                    Username = account.Username,
+                    Status = 1
+                };
+                context.Carts.Add(cart);
                 context.SaveChanges();
                 TempData["Status"] = "Đăng kí thành công"; // tạo thông báo
                 return RedirectToAction("Login"); // chuyển hướng về trang đăng nhập

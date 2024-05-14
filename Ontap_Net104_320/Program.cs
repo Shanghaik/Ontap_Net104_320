@@ -10,7 +10,7 @@
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession(option =>
             {
-                option.IdleTimeout = TimeSpan.FromSeconds(10); // Set thời gian timeout là 10 giây
+                option.IdleTimeout = TimeSpan.FromSeconds(60); // Set thời gian timeout là 10 giây
             });
             var app = builder.Build();
 

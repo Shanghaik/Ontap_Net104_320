@@ -19,7 +19,7 @@ namespace Ontap_Net104_320.Models
         public DbSet<Product> Products { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=SHANGHAIK;Initial Catalog=Ontap320;Integrated Security=True; TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=SHANGHAIK;Initial Catalog=Ontap32001;Integrated Security=True; TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
